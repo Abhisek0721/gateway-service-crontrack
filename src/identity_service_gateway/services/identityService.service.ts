@@ -1,8 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, HttpException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { lastValueFrom } from 'rxjs';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 @Injectable()
 export class IdentityService {
@@ -44,14 +44,36 @@ export class IdentityService {
             `${this.BASE_URL}${req.originalUrl}`,
           );
           break;
+        default:
+          throw new Error(`Unsupported method: ${method}`);
       }
 
       const response: AxiosResponse = await lastValueFrom(observable);
       return res.status(response.status).send(response.data);
     } catch (error) {
-      return res
-        .status(error.response?.status || 500)
-        .send(error.response?.data || error.message);
+      if (error.isAxiosError) {
+        const axiosError = error as AxiosError;
+        const statusCode = axiosError.response?.status || 500;
+
+        if (statusCode === 502) {
+          // Custom handling for 502 Bad Gateway
+          console.error(
+            '502 Bad Gateway: Identity service is down or unreachable',
+          );
+          throw new BadGatewayException()
+        }
+
+        if (!axiosError.response) {
+          // Handle network errors or no response scenarios
+          console.error('Network error or no response from Identity service');
+          throw new BadGatewayException()
+        }
+
+        console.error(`Error from Identity service: ${axiosError.message}`);
+        throw new BadGatewayException()
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 }
