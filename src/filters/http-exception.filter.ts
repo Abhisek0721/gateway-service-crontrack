@@ -18,13 +18,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
-    const message = exception.message || "An unknown error occured";
+    const message = exception.message || "Internal Server Error";
 
     response.status(status).json({
       data: null,
       message,
       error: [
-        "Internal Server Error"
+        message
       ]
     });
   }
