@@ -68,9 +68,7 @@ export class IdentityService {
           console.error('Network error or no response from Identity service');
           throw new BadGatewayException()
         }
-
-        console.error(`Error from Identity service: ${axiosError.message}`);
-        throw new BadGatewayException()
+        return res.status(statusCode).send(axiosError.response.data);
       }
 
       throw new InternalServerErrorException();
