@@ -20,13 +20,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
     const message = exception.message || "Internal Server Error";
 
-    response.status(status).json({
+    const response_structure: ApiResponseT = new ApiResponse({
       data: null,
       message,
       error: [
         message
-      ]
-    });
+      ],
+    }).freeze();
+
+    return response.status(status).json(response_structure);
   }
 }
 
@@ -48,7 +50,7 @@ export class ForbiddenExceptionFilter implements ExceptionFilter {
       ],
     }).freeze();
 
-    response.status(status).json(response_structure);
+    return response.status(status).json(response_structure);
   }
 }
 
@@ -69,7 +71,7 @@ export class UnauthorizedExceptionFilter implements ExceptionFilter {
       ],
     }).freeze();
 
-    response.status(status).json(response_structure);
+    return response.status(status).json(response_structure);
   }
 }
 
@@ -91,6 +93,6 @@ export class BadGatewayExceptionFilter implements ExceptionFilter {
       ],
     }).freeze();
 
-    response.status(status).json(response_structure);
+    return response.status(status).json(response_structure);
   }
 }
