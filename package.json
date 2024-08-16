@@ -1,10 +1,10 @@
 {
   "name": "gateway_service_creato",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Acts as an API Gateway to route requests to appropriate services and manage roles and permissions.",
+  "author": "Abhisekh Upadhaya",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT License",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
