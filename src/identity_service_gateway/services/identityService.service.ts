@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { BadGatewayException, HttpException, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import { lastValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
 
@@ -13,35 +13,42 @@ export class IdentityService {
 
   async forwardRequest(req: Request, res: Response, method: string) {
     try {
+      const headers = req.headers
+      delete headers['content-length'];
       let observable;
 
       switch (method) {
         case 'GET':
           observable = this.httpService.get(
             `${this.BASE_URL}${req.originalUrl}`,
+            { headers, timeout: 10000 }
           );
           break;
         case 'POST':
           observable = this.httpService.post(
             `${this.BASE_URL}${req.originalUrl}`,
             req.body,
+            { headers, timeout: 10000 }
           );
           break;
         case 'PATCH':
           observable = this.httpService.patch(
             `${this.BASE_URL}${req.originalUrl}`,
             req.body,
+            { headers, timeout: 10000 }
           );
           break;
         case 'PUT':
           observable = this.httpService.put(
             `${this.BASE_URL}${req.originalUrl}`,
             req.body,
+            { headers, timeout: 10000 }
           );
           break;
         case 'DELETE':
           observable = this.httpService.delete(
             `${this.BASE_URL}${req.originalUrl}`,
+            { headers, timeout: 10000 }
           );
           break;
         default:
@@ -49,7 +56,7 @@ export class IdentityService {
       }
 
       const response: AxiosResponse = await lastValueFrom(observable);
-      return res.status(response.status).send(response.data);
+      return res.status(response.status).header(response.headers).send(response.data);
     } catch (error) {
       if (error.isAxiosError) {
         const axiosError = error as AxiosError;
