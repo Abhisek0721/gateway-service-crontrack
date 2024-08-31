@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  gateway-service-creato-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    environment:
+      - BASE_URL_IDENTITY_SERVICE=${BASE_URL_IDENTITY_SERVICE}
+      - PORT=${PORT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
