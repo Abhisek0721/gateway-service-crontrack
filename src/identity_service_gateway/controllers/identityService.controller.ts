@@ -56,6 +56,12 @@ export class IdentityServiceController {
     return this.identityService.forwardRequest(req, res, req.method);
   }
 
+  // Public: Specific PATCH route for add-member-to-workspace
+  @Patch('workspace/add-member-to-workspace')
+  async addMemberToWorkspace(@Req() req: Request, @Res() res: Response) {
+    return this.identityService.forwardRequest(req, res, req.method);
+  }
+
   @Patch('workspace/*')
   @UseGuards(JwtAuthGuard)
   async handleWorkspacePatchRequests(@Req() req: Request, @Res() res: Response) {
