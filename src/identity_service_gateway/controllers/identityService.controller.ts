@@ -73,4 +73,35 @@ export class IdentityServiceController {
   async handleWorkspaceDeleteRequests(@Req() req: Request, @Res() res: Response) {
     return this.identityService.forwardRequest(req, res, req.method);
   }
+
+    // user
+    @Get('user/*')
+    @UseGuards(JwtAuthGuard)
+    async handleUserGetRequests(@Req() req: Request, @Res() res: Response) {
+      return this.identityService.forwardRequest(req, res, req.method);
+    }
+  
+    @Post('user/*')
+    @UseGuards(JwtAuthGuard)
+    async handleUserPostRequests(@Req() req: Request, @Res() res: Response) {
+      return this.identityService.forwardRequest(req, res, req.method);
+    }
+  
+    @Patch('user/*')
+    @UseGuards(JwtAuthGuard)
+    async handleUserPatchRequests(@Req() req: Request, @Res() res: Response) {
+      return this.identityService.forwardRequest(req, res, req.method);
+    }
+  
+    @Put('user/*')
+    @UseGuards(JwtAuthGuard)
+    async handleUserPutRequests(@Req() req: Request, @Res() res: Response) {
+      return this.identityService.forwardRequest(req, res, req.method);
+    }
+  
+    @Delete('user/*')
+    @UseGuards(JwtAuthGuard)
+    async handleUserDeleteRequests(@Req() req: Request, @Res() res: Response) {
+      return this.identityService.forwardRequest(req, res, req.method);
+    }
 }
