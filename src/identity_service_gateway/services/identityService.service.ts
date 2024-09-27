@@ -18,6 +18,7 @@ export class IdentityService {
       let observable;
       let queryParams = req.url.includes('?')?`?${req.url.split('?')[1]}`:'';
       let url = `${this.BASE_URL}${req.originalUrl}${queryParams}`;
+      console.log(`forwarding request to ${url}`);
       
       switch (method) {
         case 'GET':
