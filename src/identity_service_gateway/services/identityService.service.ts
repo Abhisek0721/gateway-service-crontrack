@@ -16,8 +16,9 @@ export class IdentityService {
       const headers = req.headers
       delete headers['content-length'];
       let observable;
-      let url = `${this.BASE_URL}${req.path}${req.url.includes('?') ? req.url.split('?')[1] : ''}`;
-
+      let queryParams = req.url.includes('?')?`?${req.url.split('?')[1]}`:'';
+      let url = `${this.BASE_URL}${req.originalUrl}${queryParams}`;
+      
       switch (method) {
         case 'GET':
           observable = this.httpService.get(
