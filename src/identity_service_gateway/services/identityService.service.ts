@@ -16,38 +16,39 @@ export class IdentityService {
       const headers = req.headers
       delete headers['content-length'];
       let observable;
+      let url = `${this.BASE_URL}${req.path}${req.url.includes('?') ? req.url.split('?')[1] : ''}`;
 
       switch (method) {
         case 'GET':
           observable = this.httpService.get(
-            `${this.BASE_URL}${req.originalUrl}`,
+            url,
             { headers, timeout: 10000 }
           );
           break;
         case 'POST':
           observable = this.httpService.post(
-            `${this.BASE_URL}${req.originalUrl}`,
+            url,
             req.body,
             { headers, timeout: 10000 }
           );
           break;
         case 'PATCH':
           observable = this.httpService.patch(
-            `${this.BASE_URL}${req.originalUrl}`,
+            url,
             req.body,
             { headers, timeout: 10000 }
           );
           break;
         case 'PUT':
           observable = this.httpService.put(
-            `${this.BASE_URL}${req.originalUrl}`,
+            url,
             req.body,
             { headers, timeout: 10000 }
           );
           break;
         case 'DELETE':
           observable = this.httpService.delete(
-            `${this.BASE_URL}${req.originalUrl}`,
+            url,
             { headers, timeout: 10000 }
           );
           break;
