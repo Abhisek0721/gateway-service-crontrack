@@ -10,6 +10,12 @@ COPY package*.json ./
 # Step 4: Install dependencies
 RUN npm install --production
 
+# Install dependencies
+RUN npm install
+
+# Optionally install NestJS CLI globally
+RUN npm install -g @nestjs/cli
+
 # Step 5: Copy the rest of the application code to the container
 COPY . .
 
