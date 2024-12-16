@@ -3,15 +3,18 @@ import { IdentityServiceModule } from './identity_service_gateway/identityServic
 import { ConfigModule } from '@nestjs/config';
 import { UtilsModule } from './utils/utils.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
+import { ContentServiceModule } from './content_service/contentService.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    IdentityServiceModule,
     UtilsModule,
-    AuthModule
+    AuthModule,
+    IdentityServiceModule,
+    ContentServiceModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
