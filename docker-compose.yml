@@ -12,3 +12,9 @@ services:
       - BASE_URL_IDENTITY_SERVICE=${BASE_URL_IDENTITY_SERVICE}
       - PORT=${PORT}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    networks:
+      - shared_net
+
+networks:
+  shared_net:
+    external: true
