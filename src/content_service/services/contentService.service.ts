@@ -57,7 +57,7 @@ export class ContentService {
       }
 
       const response: AxiosResponse = await lastValueFrom(observable);
-      console.log(response, 'response')
+      console.log(response.headers, 'response')
       // Handle redirection
       if (response.status === 302) {
         const redirectUrl = response.headers['location'];
