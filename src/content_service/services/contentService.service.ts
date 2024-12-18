@@ -17,10 +17,10 @@ export class ContentService {
 
   async forwardRequest(req: Request, res: Response, method: string) {
     try {
-      const headers = { ...req.headers };
-      delete headers['content-length'];
-      delete headers['host'];
-      delete headers['content-type'];
+      const headers = { };
+      // delete headers['content-length'];
+      // delete headers['host'];
+      // delete headers['content-type'];
       let observable;
       let url = `${this.BASE_URL}${req.originalUrl}`;
       console.log(`forwarding request to ${url}`);
@@ -58,7 +58,6 @@ export class ContentService {
       }
 
       const response: AxiosResponse = await lastValueFrom(observable);
-      console.log(response, 'response')
       // Handle redirection
       if (response.status === 302) {
         const redirectUrl = response.headers['location'];
