@@ -17,8 +17,10 @@ export class ContentService {
 
   async forwardRequest(req: Request, res: Response, method: string) {
     try {
-      const headers = req.headers;
+      let headers = req.headers;
       delete headers['content-length'];
+      delete headers['host'];
+      delete headers['content-type'];
       let observable;
       let url = `${this.BASE_URL}${req.originalUrl}`;
       console.log(`forwarding request to ${url}`);
@@ -56,7 +58,6 @@ export class ContentService {
       }
 
       const response: AxiosResponse = await lastValueFrom(observable);
-
       // Handle redirection
       if (response.status === 302) {
         const redirectUrl = response.headers['location'];
@@ -85,6 +86,7 @@ export class ContentService {
         if (!axiosError.response) {
           // Handle network errors or no response scenarios
           console.error('Network error or no response from Content service');
+          console.log(axiosError, 'data')
           throw new BadGatewayException();
         }
         return res.status(statusCode).send(axiosError.response.data);
