@@ -13,6 +13,7 @@ async function bootstrap() {
   app.useGlobalFilters(new ForbiddenExceptionFilter());
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
   app.useGlobalFilters(new BadGatewayExceptionFilter());
+  app.useGlobalFilters(new ForbiddenExceptionFilter());
 
   app.enableShutdownHooks();
   await app.listen(process.env.PORT);

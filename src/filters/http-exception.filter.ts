@@ -6,7 +6,8 @@ import {
   ForbiddenException,
   UnauthorizedException,
   BadGatewayException,
-  HttpException
+  HttpException,
+  NotFoundException
 } from '@nestjs/common';
 import { Response } from 'express';
 import { Response as ApiResponse } from '@utils/utils.service';
@@ -41,7 +42,7 @@ export class ForbiddenExceptionFilter implements ExceptionFilter {
     const status: number = exception.getStatus() || HttpStatus.FORBIDDEN;
     const errors = exception['response']['message'];
     const data = null;
-    const message = 'You do not have permission to access';
+    const message = exception.message || "Not Found!";;
     const response_structure: ApiResponseT = new ApiResponse({
       data,
       message,
@@ -60,6 +61,28 @@ export class UnauthorizedExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status: number = exception.getStatus() || HttpStatus.UNAUTHORIZED;
+    const errors = exception['response']['message'];
+    const data = null;
+    const message = 'You are not authorized to access';
+    const response_structure: ApiResponseT = new ApiResponse({
+      data,
+      message,
+      error: [
+        errors
+      ],
+    }).freeze();
+
+    return response.status(status).json(response_structure);
+  }
+}
+
+
+@Catch(NotFoundException)
+export class NotFoundExceptionFilter implements ExceptionFilter {
+  catch(exception: NotFoundException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const status: number = exception.getStatus() || HttpStatus.NOT_FOUND;
     const errors = exception['response']['message'];
     const data = null;
     const message = 'You are not authorized to access';
