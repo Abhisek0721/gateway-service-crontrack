@@ -42,4 +42,30 @@ export class ContentServiceController {
     return this.contentService.forwardRequest(req, res, req.method);
   }
 
+  // social-media-account
+  @Get('social-media-account/*')
+  async handleSocialMediaAccountGetRequests(@Req() req: Request, @Res() res: Response) {
+    return this.contentService.forwardRequest(req, res, req.method);
+  }
+
+  @Post('social-media-account/*')
+  async handleSocialMediaAccountPostRequests(@Req() req: Request, @Res() res: Response) {
+    return this.contentService.forwardRequest(req, res, req.method);
+  }
+
+  @Patch('social-media-account/*')
+  async handleSocialMediaAccountPatchRequests(@Req() req: Request, @Res() res: Response) {
+    return this.contentService.forwardRequest(req, res, req.method);
+  }
+
+  @Put('social-media-account/*')
+  async handleSocialMediaAccountPutRequests(@Req() req: Request, @Res() res: Response) {
+    return this.contentService.forwardRequest(req, res, req.method);
+  }
+
+  @Delete('social-media-account/*')
+  async handleSocialMediaAccountDeleteRequests(@Req() req: Request, @Res() res: Response) {
+    return this.contentService.forwardRequest(req, res, req.method);
+  }
+
 }
